@@ -1,12 +1,23 @@
 // ===============================
-// VIDEO — liberar som no primeiro clique
+// VIDEO — tocar com som em um único clique (botão)
 // ===============================
-const video = document.querySelector('video');
+const video = document.getElementById('teaser') || document.querySelector('video');
+const playBtn = document.getElementById('play-with-sound');
 
-if (video) {
-  video.addEventListener('click', () => {
-    video.muted = false;
-    video.volume = 1;
+if (video && playBtn) {
+  playBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      // desativa o mute e define volume antes de chamar play()
+      video.muted = false;
+      video.volume = 1;
+      // mostrar controles nativos após iniciar
+      video.controls = true;
+      await video.play();
+      playBtn.style.display = 'none';
+    } catch (err) {
+      console.error('Erro ao reproduzir com som:', err);
+    }
   });
 }
 
