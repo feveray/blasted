@@ -1,0 +1,438 @@
+:root {
+  --scroll-subtle: rgba(68,68,68,0.02);
+  --scroll-visible: rgba(68,68,68,0.14); /* ajustar para a visibilidade desejada */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0b0b0b;
+  color: #ededed;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 5rem 1rem 3rem;
+}
+
+.company {
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  color: #6e6e6e;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(4rem, 12vw, 10rem);
+  letter-spacing: 0.05em;
+}
+
+.author {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  margin-top: -1rem;
+}
+
+.warning {
+  margin: 2rem auto;
+  max-width: 600px;
+  color: #cccccc;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  background-color: #8c1d18;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.cta:hover {
+  opacity: 0.85;
+}
+
+/* POSTER */
+.poster img {
+  width: 10%;
+  display: block;
+}
+
+/* SECTIONS */
+.section {
+  padding: 2rem 1.5rem 4rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1em;
+}
+
+.section p {
+  margin-bottom: 1.5rem;
+}
+
+.dark {
+  background-color: #ededed;
+}
+.dark .invertido {
+  color: #0b0b0b;
+  text-shadow: 0 6px 22px rgba(0, 0, 0, 0.247);
+}
+/* dark section: limitar fundo a um card central */
+.section.dark {
+  padding: 2rem 1rem; /* espaço externo da section */
+}
+
+.sinopse {
+  background: #ededed;         /* cor do fundo reduzido */
+  color: #0b0b0b;             /* texto invertido dentro do card */
+  max-width: 700px;           /* largura do card (ajuste) */
+  margin:  0 auto;             /* centra o card */
+  padding: 2.5rem 2rem 1.5rem 2rem;       /* padding interno do card (ajuste) */
+  border-radius: 26px;        /* canto arredondado opcional */
+}
+
+/* centralizar apenas a seção Serviço */
+.section.service {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza o conteúdo horizontalmente */
+  text-align: left;  /* centraliza texto e h3 */
+  padding-left: 1rem;  /* ajustar se necessário */
+  padding-right: 1rem;
+}
+
+/* reduzir espaçamento superior específico para a seção Serviço */
+.section.service {
+  padding-top: 0.2rem; /* antes herdava 2rem de .section — ajuste esse valor conforme preferir */
+  margin-top: 0.2rem; /* reduzir margem superior adicional */
+}
+
+.section.service p {
+  max-width: 700px;    /* largura do bloco de texto */
+  margin: 0 auto 1rem; /* centra a caixa, texto alinhado à esquerda */
+  text-align: left;
+}
+
+.section.service h3 {
+  max-width: 700px;
+  margin: 0 auto 1rem; /* alinha a mesma caixa do parágrafo */
+  text-align: left;
+}
+
+/* wrap that limits the content width so CTA centers with the text */
+.section.service .service-inner {
+  max-width: 700px;
+  margin: 0; /* remove auto centering so left edge aligns with other sections */
+  text-align: left; /* align content left to match other section headings */
+  align-self: flex-start; /* position the inner block to the left while CTA remains centered */
+}
+
+/* keep CTA centered as a direct child of .section.service */
+.section.service > .cta {
+  align-self: center;
+  display: inline-block;
+  margin: 0 0 1rem 0;
+}
+
+.section.service .cta {
+  margin-top: 1rem;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto; /* centraliza o botão dentro do wrapper */
+}
+
+/* se o botão estiver dentro de .service-inner, garantir centralização */
+.section.service .service-inner .cta {
+  margin: 1rem auto 0;
+  display: inline-block;
+}
+
+/* imagens */
+.gallery {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.gallery img {
+  height: 300px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* draggable gallery cursor states */
+.gallery {
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery.dragging { cursor: grabbing; user-select: none; }
+
+.gallery img { -webkit-user-drag: none; user-drag: none; }
+
+.gallery img.active {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  z-index: 999;
+  cursor: zoom-out;
+}
+
+/* melhor experiência de visualização: cursor e overlay dedicado */
+.gallery img {
+  cursor: zoom-in;
+}
+
+/* Lightbox overlay */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.85);
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 180ms ease;
+  padding: 2rem;
+}
+
+.lightbox-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  border-radius: 6px;
+  cursor: zoom-out;
+}
+
+.lightbox-caption {
+  margin-top: 1rem;
+  color: #ededed;
+  font-size: 0.95rem;
+  text-align: center;
+  background: rgba(0,0,0,0.4);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  max-width: 90vw;
+}
+
+/* Lightbox controls */
+.lightbox-close,
+.lightbox-next,
+.lightbox-prev {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.lightbox-close:hover,
+.lightbox-next:hover,
+.lightbox-prev:hover { transform: scale(1.05); background: rgba(0,0,0,0.75); }
+
+.lightbox-close { top: 1.25rem; right: 1.25rem; }
+.lightbox-next { right: 1rem; top: 50%; transform: translateY(-50%); }
+
+.lightbox-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
+
+/* make sure buttons are above image */
+.lightbox-overlay button { z-index: 10001; }
+
+
+/* mobile mais agressivo */
+@media (max-width: 768px) {
+  .gallery img {
+    height: 240px;
+  }
+}
+
+/* scrollbar da galeria */
+.gallery::-webkit-scrollbar {
+  height: 6px;
+}
+
+.gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gallery::-webkit-scrollbar-thumb {
+  background: var(--scroll-subtle);
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  transition: background 300ms ease;
+}
+
+.gallery::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-visible);
+}
+
+/* during active drag keep thumb subtle (less visible) */
+.gallery.dragging::-webkit-scrollbar-thumb {
+  background: var(--scroll-subtle);
+}
+
+/* Firefox */
+.gallery {
+  scrollbar-color: var(--scroll-subtle) transparent;
+  scrollbar-width: thin;
+}
+
+.gallery.dragging {
+  scrollbar-color: var(--scroll-visible) transparent;
+}
+
+/* when hovering the gallery, make the thumb match the dragging appearance */
+.gallery:hover::-webkit-scrollbar-thumb {
+  background: var(--scroll-visible);
+}
+.gallery:hover {
+  scrollbar-color: var(--scroll-visible) transparent;
+}
+
+
+
+/* mídia */
+.media {
+  list-style: none;
+}
+
+.media li {
+  margin-bottom: 2rem;
+}
+
+.media a {
+  color: #ededed;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.media a:hover {
+  color: #8c1d18;
+}
+
+.media span {
+  display: block;
+  margin-top: 0.4rem;
+  color: #6e6e6e;
+  font-size: 0.9rem;
+}
+
+/* vídeo */
+.video-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.video-wrapper video {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 480 / 848;
+  background: #000;
+}
+
+
+/* CREDITS */
+.credits {
+  list-style: none;
+  color: #0b0b0b;
+}
+
+.credits li {
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+
+/* BACK TO TOP */
+.back-top {
+  display: block;
+  text-align: center;
+  margin: 4rem auto 0;
+  color: #ededed;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+.back-top:hover {
+  color: #8c1d18;
+}
+.back-top.fixed {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: none;
+  background: #111;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  z-index: 10002;
+}
+
+
+/* FOOTER */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-size: 0.8rem;
+  color: #6e6e6e;
+}
+
+/* footer social icon */
+.social-footer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.social-footer a { color: inherit; text-decoration: none; display: inline-flex; align-items: center; }
+.social-footer .social-icon { width: 28px; height: 28px; }
+.social-footer svg { fill: currentColor; opacity: 0.9; transition: opacity 140ms ease, transform 140ms ease; }
+.social-footer a:hover svg { opacity: 1; transform: translateY(-2px); }
+
+/* CONTACT LINKS (Serviço) — remover sublinhado e usar hover vermelho */
+.section.service .service-inner a:not(.cta) {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 160ms ease;
+}
+.section.service .service-inner a:not(.cta):hover {
+  color: #8c1d18; /* vermelho/CTA color */
+  text-decoration: none;
+}
