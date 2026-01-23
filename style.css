@@ -107,7 +107,7 @@ body {
   border-radius: 32px;        /* canto arredondado opcional */
 }
 
-/* centralizar apenas a seção Serviço */
+/* centralizar apenas a seção Serviço (consolidado) */
 .section.service {
   display: flex;
   flex-direction: column;
@@ -115,11 +115,7 @@ body {
   text-align: left;  /* centraliza texto e h3 */
   padding-left: 1rem;  /* ajustar se necessário */
   padding-right: 1rem;
-}
-
-/* reduzir espaçamento superior específico para a seção Serviço */
-.section.service {
-  padding-top: 0.2rem; /* antes herdava 2rem de .section — ajuste esse valor conforme preferir */
+  padding-top: 0.2rem; /* reduzir espaçamento superior específico */
   margin-top: 0.2rem; /* reduzir margem superior adicional */
 }
 
@@ -143,7 +139,7 @@ body {
   align-self: flex-start; /* position the inner block to the left while CTA remains centered */
 }
 
-/* keep CTA centered as a direct child of .section.service */
+/* CTA rules consolidated */
 .section.service > .cta {
   align-self: center;
   display: inline-block;
@@ -164,29 +160,33 @@ body {
   display: inline-block;
 }
 
-/* imagens */
+/* imagens / galeria (consolidado) */
 .gallery {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
   padding-bottom: 1rem;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: var(--scroll-subtle) transparent;
+  scrollbar-width: thin;
 }
 
+.gallery.dragging {
+  cursor: grabbing;
+  user-select: none;
+  scrollbar-color: var(--scroll-visible) transparent;
+}
+
+/* thumbnails */
 .gallery img {
   height: 300px;
   flex-shrink: 0;
   object-fit: cover;
+  -webkit-user-drag: none;
+  user-drag: none;
+  cursor: zoom-in;
 }
-
-/* draggable gallery cursor states */
-.gallery {
-  cursor: grab;
-  -webkit-overflow-scrolling: touch;
-}
-
-.gallery.dragging { cursor: grabbing; user-select: none; }
-
-.gallery img { -webkit-user-drag: none; user-drag: none; }
 
 .gallery img.active {
   position: fixed;
@@ -199,10 +199,6 @@ body {
 }
 
 /* melhor experiência de visualização: cursor e overlay dedicado */
-.gallery img {
-  cursor: zoom-in;
-}
-
 /* Lightbox overlay */
 .lightbox-overlay {
   position: fixed;
@@ -275,7 +271,6 @@ body {
 /* make sure buttons are above image */
 .lightbox-overlay button { z-index: 10001; }
 
-
 /* mobile mais agressivo */
 @media (max-width: 768px) {
   .gallery img {
@@ -308,16 +303,6 @@ body {
   background: var(--scroll-subtle);
 }
 
-/* Firefox */
-.gallery {
-  scrollbar-color: var(--scroll-subtle) transparent;
-  scrollbar-width: thin;
-}
-
-.gallery.dragging {
-  scrollbar-color: var(--scroll-visible) transparent;
-}
-
 /* when hovering the gallery, make the thumb match the dragging appearance */
 .gallery:hover::-webkit-scrollbar-thumb {
   background: var(--scroll-visible);
@@ -325,8 +310,6 @@ body {
 .gallery:hover {
   scrollbar-color: var(--scroll-visible) transparent;
 }
-
-
 
 /* mídia */
 .media {
@@ -387,7 +370,6 @@ body {
 
 .video-splash video { display: block; }
 
-
 /* CREDITS */
 .credits {
   list-style: none;
@@ -423,7 +405,6 @@ body {
   font-size: 0.75rem;
   z-index: 10002;
 }
-
 
 /* FOOTER */
 .footer {
